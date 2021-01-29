@@ -3,6 +3,7 @@ const app = express()
 const port = 5000
 const bodyParser = require('body-parser')
 const { User } = require("./models/User")
+const config = require('./config/key')
 
 //application/x-www-urlencoded 를 분석해서 가져올 수 있게 해준다.
 app.use(bodyParser.urlencoded({extended: true}))
@@ -11,13 +12,13 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb정보', {
+mongoose.connect(config.mongoURI, {
     useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err))
 
 app.get('/', (req, res) => {
-  res.send('Hello World!~~')
+  res.send('Hello World!~~ nodemon을 적용했습니다.')
 })
 
 app.post('/register', (req, res) => {
