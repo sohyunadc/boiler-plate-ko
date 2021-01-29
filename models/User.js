@@ -14,6 +14,10 @@ const userSchema = mongoose.Schema({
         type: String,
         maxlength: 50
     },
+    lastname: {
+        type: String,
+        maxlength: 50
+    },
     role: {
         type: Number,
         default: 0
@@ -27,6 +31,6 @@ const userSchema = mongoose.Schema({
     }
 })
 
-const User = mongoose.deleteModel('User', userSchema)
+const User = mongoose.model('User', userSchema)
 
 module.exports = { User }
