@@ -3,9 +3,9 @@ const app = express()
 const port = 5000
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const { auth } = require("./middleware/auth")
-const { User } = require("./models/User")
 const config = require('./config/key')
+const { User } = require("./models/User")
+const { auth } = require("./middleware/auth")
 
 //application/x-www-urlencoded 를 분석해서 가져올 수 있게 해준다.
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -28,14 +28,12 @@ app.post('/api/users/register', (req, res) => {
 
   // 회원 가입 할 때 필요한 정보들을 client에서 가져오면
   // 그것들을 데이터베이스에 넣어준다.
-
   const user = new User(req.body)
 
   user.save((err, userInfo) => {
     if (err) return res.json({ success: false, err })
     return res.status(200).json({ success: true })
   })
-
 })
 
 app.post('/api/users/login', (req, res) => {
@@ -66,8 +64,8 @@ app.post('/api/users/login', (req, res) => {
   })
 })
 
-app.get('/api/users/auth', auth, (req,res) => {
-  
+app.get('/api/users/auth', auth, (req, res) => {
+
   // 미들웨어를 통과해서 여기까지 왔다는 것은 Authentication이 true 라는 것
 
   res.status(200).json({
@@ -80,7 +78,18 @@ app.get('/api/users/auth', auth, (req,res) => {
     role: req.user.role,
     image: req.user.image
   })
+})
 
+app.get('/api/users/logout', auth, (req, res) => {
+  console.log('req.user', req.user)
+  User.findOneAndUpdate({ _id: req.user._id }
+    , { token: "" }
+    , (err, user) => {
+      if (err) return res.json({ success: false, err })
+      return res.status(200).send({
+        success: true
+      })
+    })
 })
 
 app.listen(port, () => {
