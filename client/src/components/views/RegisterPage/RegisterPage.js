@@ -1,7 +1,7 @@
 
 import React from 'react'
 
-function LandingPage() {
+function RegisterPage() {
     return (
         <div>
             레지스터페이지
@@ -9,4 +9,4 @@ function LandingPage() {
     )
 }
 
-export default LandingPage
+export default RegisterPage

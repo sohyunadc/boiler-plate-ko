@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 
 import LandingPage from './components/views/LandingPage/LandingPage'
-import LoginPage from './components/views/LoginPage/LoginPage.js'
-import RegisterPage from './components/views/RegisterPage/RegisterPage.js'
+import LoginPage from './components/views/LoginPage/LoginPage'
+import RegisterPage from './components/views/RegisterPage/RegisterPage'
 
 function App() {
   return (
