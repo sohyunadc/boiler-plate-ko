@@ -47,7 +47,7 @@ function RegisterPage(props) {
                 if(response.payload.success) {
                     props.history.push('/login')
                 } else {
-                    alert('회원가입 ')
+                    alert('회원가입 실패!')
                 }
             })
 
