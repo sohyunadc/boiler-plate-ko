@@ -1,9 +1,13 @@
-import { combineReducers } from 'redux';
-import user from './user_reducer';
-import comment from './comment_reducer';
+import {
+    LOGIN_USER
+} from '../_actions/types'
 
-const rootReducer = combineReducers({
-    // user,
-})
-
-export default rootReducer; 
+export default function (state = {}, action) {
+    switch (action.type) {
+        case LOGIN_USER:
+            return { ...state, loginSuccess: action.payload }
+            
+        default:
+            return state;
+    }
+}
