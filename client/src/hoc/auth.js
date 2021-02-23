@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { auth } from '../_actions/user_action'
 
-export default function (SpecificComponent, option, adminRoute = null) {
+export default function authChcek(SpecificComponent, option, adminRoute = null) {
 
     // 위 option 값 (App.js에서 확인)
     // null => 아무나 출입이 가능한 페이지
@@ -16,10 +16,28 @@ export default function (SpecificComponent, option, adminRoute = null) {
         useEffect(() => {
 
             dispatch(auth()).then(response => {
-                console.log(response)
+                console.log(response);
+
+                if (!response.payload.isAuth) {
+                    // 로그인 하지 않은 상태
+                    if (option) {
+                        props.history.push('/login');
+                    }
+                } else {
+                    if (adminRoute && response.payload.isAdmin) {
+                        props.history.push('/');
+                    } else {
+                        if (option === false) {
+                            props.history.push('/')
+                        }
+                    }
+                }
             });
 
-        }, [])
+        }, [dispatch, props.history])
+
+        return <SpecificComponent {...props} />;
+
     }
 
     return AuthenticationCheck
